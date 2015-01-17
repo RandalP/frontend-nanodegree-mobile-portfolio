@@ -14,37 +14,27 @@
         font-family: 'Open Sans';
         font-style: normal;
         font-weight: 400;
-        src: local('Open Sans'), local('OpenSans'), url(http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+        src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
       }
       @font-face {
         font-family: 'Open Sans';
         font-style: normal;
         font-weight: 700;
-        src: local('Open Sans Bold'), local('OpenSans-Bold'), url(http://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
+        src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
       }
       @font-face {
         font-family: 'Open Sans';
         font-style: italic;
         font-weight: 400;
-        src: local('Open Sans Italic'), local('OpenSans-Italic'), url(http://fonts.gstatic.com/s/opensans/v10/xjAJXh38I15wypJXxuGMBogp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+        src: local('Open Sans Italic'), local('OpenSans-Italic'), url(https://fonts.gstatic.com/s/opensans/v10/xjAJXh38I15wypJXxuGMBogp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-      }
-      @media print {
-        * { background: transparent !important; color: black !important; text-shadow: none !important; filter: none !important; -ms-filter: none !important; }
-        a, a:visited { color: #444 !important; text-decoration: underline; }
-        a[href]:after { content: " (" attr(href) ")"; }
-        tr, img { page-break-inside: avoid; }
-        img { max-width: 100% !important; }
-        @page { margin: 0.5cm; }
-        p, h2, h3 { orphans: 3; widows: 3; }
-        h2, h3 { page-break-after: avoid; }
       }
     </style>
 
-    <link href="css/style.css" rel="stylesheet">
-    <!-- link href="css/print.css" rel="stylesheet" media="print" -->
+    <link href="css/min/style.css" rel="stylesheet">
+    <link href="css/min/print.css" rel="stylesheet" media="print">
 
     <script async src="//www.google-analytics.com/analytics.js"></script>
     <script>
@@ -58,7 +48,7 @@
 
   <body>
     <header>
-      <a href="/"><img src="img/profilepic.jpg" width="70" height="70" alt="My Profile"></a>
+      <a href="/"><img src="img/min/profilepic.jpg" width="70" height="70" alt="My Profile"></a>
       <p>Randal Parsons<br><span>Component Architect</span></p>
     </header>
 
@@ -88,7 +78,7 @@
           </li>
 
           <li>
-            <img src="img/pizzeria.jpg" width="100" height="75" alt="Pizzeria">
+            <img src="img/min/pizzeria.jpg" width="100" height="75" alt="Pizzeria">
             <a href="views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
