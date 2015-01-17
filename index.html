@@ -7,8 +7,7 @@
     <meta name="author" content="Randal Parsons">
     <title>Randal Parsons: Portfolio</title>
 
-    <!-- Hmm, what is the impact of web fonts on speed? Measure it... -->
-    <!-- link href="//fonts.googleapis.com/css?family=Open+Sans:400,b,i" rel="stylesheet" -->
+    <!-- Inline CSS returned by web fonts" -->
     <style>
       @font-face {
         font-family: 'Open Sans';
@@ -32,6 +31,20 @@
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
       }
     </style>
+    <script>
+        // Inline CSS after loading
+        // https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
+        function loadCss() {
+          var h = document.getElementsByTagName('head')[0];
+          var cssSources = ["css/min/style.css"];
+          for (i in cssSources) {
+            var l = document.createElement('link'); l.rel = 'stylesheet';
+            l.href = cssSources[i];
+            h.parentNode.insertBefore(l, h);
+          }
+        }
+        loadCss();
+    </script>
 
     <link href="css/min/print.css" rel="stylesheet" media="print">
 
@@ -97,6 +110,7 @@
             var stats = document.getElementById("crp-stats");
             stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
         }
+        /*
         // Inline CSS after loading
         // https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
         function loadCss() {
@@ -108,8 +122,9 @@
             h.parentNode.insertBefore(l, h);
           }
         }
+        */
         window.addEventListener("load", function(event) {
-          loadCss();
+          //loadCss();
           logCRP();
         });
       </script>
