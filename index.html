@@ -7,45 +7,6 @@
     <meta name="author" content="Randal Parsons">
     <title>Randal Parsons: Portfolio</title>
 
-    <!-- Inline CSS returned by web fonts" -->
-    <style>
-      @font-face {
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 400;
-        src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3ZBw1xU1rKptJj_0jans920.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-      }
-      @font-face {
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 700;
-        src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBampu5_7CjHW5spxoeN3Vs.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-      }
-      @font-face {
-        font-family: 'Open Sans';
-        font-style: italic;
-        font-weight: 400;
-        src: local('Open Sans Italic'), local('OpenSans-Italic'), url(https://fonts.gstatic.com/s/opensans/v10/xjAJXh38I15wypJXxuGMBogp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-      }
-    </style>
-    <script>
-        // Inline CSS after loading
-        // https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
-        function loadCss() {
-          var h = document.getElementsByTagName('head')[0];
-          var cssSources = ["css/min/style.css"];
-          for (i in cssSources) {
-            var l = document.createElement('link'); l.rel = 'stylesheet';
-            l.href = cssSources[i];
-            h.parentNode.insertBefore(l, h);
-          }
-        }
-        loadCss();
-    </script>
-
     <link href="css/min/print.css" rel="stylesheet" media="print">
 
     <script async src="//www.google-analytics.com/analytics.js"></script>
@@ -110,21 +71,19 @@
             var stats = document.getElementById("crp-stats");
             stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
         }
-        /*
         // Inline CSS after loading
         // https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
         function loadCss() {
           var h = document.getElementsByTagName('head')[0];
-          var cssSources = ["css/min/style.css"];
+          var cssSources = ["css/min/style.css", "css/min/font.css"];
           for (i in cssSources) {
             var l = document.createElement('link'); l.rel = 'stylesheet';
             l.href = cssSources[i];
             h.parentNode.insertBefore(l, h);
           }
         }
-        */
         window.addEventListener("load", function(event) {
-          //loadCss();
+          loadCss();
           logCRP();
         });
       </script>
