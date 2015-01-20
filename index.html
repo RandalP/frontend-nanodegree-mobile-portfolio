@@ -7,21 +7,19 @@
     <meta name="author" content="Randal Parsons">
     <title>Randal Parsons: Portfolio</title>
 
-    <link href="css/min/print.css" rel="stylesheet" media="print">
+    <!-- smoosh -->
+    <link rel="stylesheet" href="css/font.css">
+    <!-- endsmoosh -->
 
     <script async src="//www.google-analytics.com/analytics.js"></script>
-    <script>
-      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-
-      // TODO: replace with your Google Analytics profile ID.
-      ga('create', 'UA-XXXX-Y');
-      ga('send', 'pageview');
-    </script>
+    <!-- smoosh -->
+    <script src="js/ga.js"></script>
+    <!-- endsmoosh -->
   </head>
 
   <body>
     <header>
-      <a href="/"><img src="img/min/profilepic.jpg" width="70" height="70" alt="My Profile"></a>
+      <a href="/"><img src="img/profilepic.jpg" width="70" height="70" alt="My Profile"></a>
       <p>Randal Parsons<br><span>Component Architect</span></p>
     </header>
 
@@ -51,7 +49,7 @@
           </li>
 
           <li>
-            <img src="img/min/pizzeria.jpg" width="100" height="75" alt="Pizzeria">
+            <img src="img/pizzeria.jpg" width="100" height="75" alt="Pizzeria">
             <a href="views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
@@ -61,33 +59,10 @@
 
     <footer>
       <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
-      <script>
-        // Measuring the Critical Rendering Path with Navigation Timing
-        // https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp
-        function logCRP() {
-          var t = window.performance.timing,
-            dcl = t.domContentLoadedEventStart - t.domLoading,
-            complete = t.domComplete - t.domLoading;
-            var stats = document.getElementById("crp-stats");
-            stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
-        }
-        // Inline CSS after loading
-        // https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery
-        function loadCss() {
-          var h = document.getElementsByTagName('head')[0];
-          var cssSources = ["css/min/style.css", "css/min/font.css"];
-          for (i in cssSources) {
-            var l = document.createElement('link'); l.rel = 'stylesheet';
-            l.href = cssSources[i];
-            h.parentNode.insertBefore(l, h);
-          }
-        }
-        loadCss();
-        window.addEventListener("load", function(event) {
-          //loadCss();
-          logCRP();
-        });
-      </script>
+      <!-- smoosh -->
+     <script src="js/perfmatters.js"></script>
+      <!-- endsmoosh -->
     </footer>
+     <link rel="stylesheet" href="css/style.css">
   </body>
 </html>
