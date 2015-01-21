@@ -26,10 +26,14 @@ gulp.task('move', function() {
 
 gulp.task('html', ['move'], function() {
   var minifyHtml = require('gulp-minify-html');
-  var opts = {}; // comments:true,spare:true};
+  var opts = { comments: true }; // spare:true
 
-  gulp.src([siteDir + '/*.html', siteDir + '/views/*.html'], { base: siteDir })
+  gulp.src(siteDir + '/*.html')
     .pipe(smoosher({base : siteDir}))
+    .pipe(minifyHtml(opts))
+    .pipe(gulp.dest(siteDir));
+  return gulp.src(siteDir + '/views/*.html', { base: siteDir })
+    .pipe(smoosher( { base: siteDir + '/views' }))
     .pipe(minifyHtml(opts))
     .pipe(gulp.dest(siteDir));
 });
@@ -39,23 +43,13 @@ gulp.task('img', function() {
 	var pngquant = require('imagemin-pngquant');
   var mozjpeg = require('imagemin-mozjpeg');
 
-  // views/images/pizzeria.jpg causes "Error: write EPIPE", which is likely related
-  // to a race condition, so it is handled separately.
-  return gulp.src(['img/*', 'views/images/*.png'], { base: './' })
+  return gulp.src(['img/*', 'views/images/*'], { base: './' })
     .pipe(imagemin({
         progressive: true,
         svgoPlugins: [{removeViewBox: false}],
         use: [pngquant(), mozjpeg()]
     }))
     .pipe(gulp.dest(siteDir));
-});
-
-gulp.task('big-img', function () {
-  var mozjpeg = require('imagemin-mozjpeg');
-
-  return gulp.src('views/images/*.jpg')
-    .pipe(mozjpeg()())
-    .pipe(gulp.dest(siteDir + '/views/images'));
 });
 
 gulp.task('jshint', function() {
@@ -169,7 +163,7 @@ gulp.task('clean', function() {
   del(siteDir);
 });
 
-gulp.task('assets', ['img', 'big-img', 'css', 'js']);
+gulp.task('assets', ['img', 'css', 'js']);
 
 gulp.task('default', function() {
 	return sequence('clean', 'assets', 'html');
