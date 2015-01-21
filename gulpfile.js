@@ -14,13 +14,13 @@ var portNum = 8080;
 gulp.task('css', function() {
 	var minifyCss = require('gulp-minify-css');
 
-	return gulp.src('./css/*')
+	return gulp.src(['css/*', 'views/css/*'], { base: './' })
     .pipe(minifyCss())
-    .pipe(gulp.dest(siteDir + '/css'));
+    .pipe(gulp.dest(siteDir));
 });
 
 gulp.task('move', function() {
-  return gulp.src("*.html")
+  return gulp.src(['*.html', 'views/*.html'], { base: './' })
     .pipe(gulp.dest(siteDir));
 });
 
@@ -28,7 +28,7 @@ gulp.task('html', ['move'], function() {
   var minifyHtml = require('gulp-minify-html');
   var opts = {}; // comments:true,spare:true};
 
-  gulp.src(siteDir + '/*.html')
+  gulp.src([siteDir + '/*.html', siteDir + '/views/*.html'], { base: siteDir })
     .pipe(smoosher({base : siteDir}))
     .pipe(minifyHtml(opts))
     .pipe(gulp.dest(siteDir));
@@ -37,21 +37,32 @@ gulp.task('html', ['move'], function() {
 gulp.task('img', function() {
 	var imagemin = require('gulp-imagemin');
 	var pngquant = require('imagemin-pngquant');
+  var mozjpeg = require('imagemin-mozjpeg');
 
-	return gulp.src('img/*')
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()]
-        }))
-        .pipe(gulp.dest(siteDir + '/img'));
+  // views/images/pizzeria.jpg causes "Error: write EPIPE", which is likely related
+  // to a race condition, so it is handled separately.
+  return gulp.src(['img/*', 'views/images/*.png'], { base: './' })
+    .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngquant(), mozjpeg()]
+    }))
+    .pipe(gulp.dest(siteDir));
+});
+
+gulp.task('big-img', function () {
+  var mozjpeg = require('imagemin-mozjpeg');
+
+  return gulp.src('views/images/*.jpg')
+    .pipe(mozjpeg()())
+    .pipe(gulp.dest(siteDir + '/views/images'));
 });
 
 gulp.task('jshint', function() {
     var stylish = require('jshint-stylish');
     var jshint = require("gulp-jshint");
 
-  return gulp.src('./js/*')
+  return gulp.src(['js/*', 'views/js/*'])
         .pipe(jshint())
         .pipe(jshint.reporter(stylish));
 });
@@ -59,9 +70,9 @@ gulp.task('jshint', function() {
 gulp.task('js', function() {
   var uglify = require('gulp-uglify');
 
-  return gulp.src('./js/*')
+  return gulp.src(['js/*', 'views/js/*'], { base: './' })
     .pipe(uglify())
-    .pipe(gulp.dest(siteDir + '/js'));
+    .pipe(gulp.dest(siteDir));
 });
 
 gulp.task('browser-sync-psi', function() {
@@ -158,9 +169,13 @@ gulp.task('clean', function() {
   del(siteDir);
 });
 
-gulp.task('assets', ['img', 'css', 'js']);
+gulp.task('assets', ['img', 'big-img', 'css', 'js']);
 
 gulp.task('default', function() {
 	return sequence('clean', 'assets', 'html');
 });
 
+function errorHandler (error) {
+  console.log(error.toString());
+  this.emit('end');
+}
