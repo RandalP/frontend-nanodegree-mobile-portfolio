@@ -525,8 +525,8 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var movingPizzas1 = document.querySelector("#movingPizzas1");
-  var scrollTop = document.body.scrollTop;
   updateDomWithElementRemoved(movingPizzas1, function() {
+    var scrollTop = document.body.scrollTop;
     var items = movingPizzas1.children;
     for (var i = 0, length = items.length; i <length; i++) {
       var phase = Math.sin((scrollTop/ 1250) + (i % 5));
@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
   for (var i = 0; i < 200; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
-    elem.src = "images/pizza.png";
+    elem.src = "images/pizza.svg";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
