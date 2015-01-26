@@ -16,6 +16,11 @@ Cameron Pittman, Udacity Course Developer
 cameron *at* udacity *dot* com
 */
 
+var movingPizzas = {
+  cols: 8,
+  spacing: 256
+};
+
 // As you may have realized, this website randomly generates pizzas.
 // Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
@@ -364,7 +369,7 @@ var pizzaElementGenerator = function(i) {
   pizzaDescriptionContainer = document.createElement("div");
 
   pizzaContainer.classList.add("randomPizzaContainer");
-  pizzaContainer.style.width = "33.33%";
+  //pizzaContainer.style.width = "33.33%";
   pizzaContainer.style.height = "325px";
   pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
   pizzaImageContainer.classList.add("col-md-6");
@@ -378,8 +383,8 @@ var pizzaElementGenerator = function(i) {
   pizzaDescriptionContainer.classList.add("col-md-6");
 
   pizzaName = document.createElement("h4");
-//  pizzaName.innerHTML = randomName();
-  pizzaName.textContent = randomName();
+  pizzaName.innerHTML = randomName();
+  // TODO??? pizzaName.textContent = randomName();
   pizzaDescriptionContainer.appendChild(pizzaName);
 
   ul = document.createElement("ul");
@@ -414,8 +419,7 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size, windowwidth) {
-    var oldwidth = elem.offsetWidth;
+  function determineDx (oldwidth, size, windowwidth) {
     var oldsize = oldwidth / windowwidth;
 
     // TODO: change to 3 sizes? no more xl?
@@ -442,17 +446,22 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     var pizzasDiv = document.getElementById("randomPizzas");
-    var offsetWidth = pizzasDiv.offsetWidth;
-    updateDomWithElementRemoved(pizzasDiv, function() {
-      var pizzaContainers = pizzasDiv.children;
-      for (var i = 0, length = pizzaContainers.length; i < length; i++) {
-        var pizzaContainer = pizzaContainers[i];
-        var dx = determineDx(pizzaContainer, size, offsetWidth);
-        var newwidth = (pizzaContainer.offsetWidth + dx) + 'px';
-        pizzaContainer.style.width = newwidth;
-      }
-    });
-  }
+    var divWidth = pizzasDiv.offsetWidth;
+    var pizzaContainers = pizzasDiv.children;
+
+    // New width is the same for all pizzas, so only calculate the first one.
+    var pizzaWidth = pizzaContainers[0].offsetWidth;
+    var dx = determineDx(pizzaWidth, size, divWidth);
+    var newwidth = (pizzaWidth + dx) + 'px';
+
+    var myStyle = document.styleSheets[0];
+    console.dir(myStyle);
+    var length = myStyle.cssRules.length;
+
+    // Replace last rule from stye.css which controls container width.
+    myStyle.deleteRule(length - 1);
+    myStyle.insertRule(".randomPizzaContainer { width: " + newwidth + "}",  length - 1);
+ }
 
   changePizzaSizes(size);
 
@@ -507,12 +516,12 @@ function updateDomWithElementRemoved(element, callback) {
   var nextSibling = element.nextSibling;
   parentNode.removeChild(element);
   var retval = null;
-  try {
+  //try {
     retval = callback();
-  }
-  finally {
+  //}
+  //finally {
     parentNode.insertBefore(element, nextSibling);
-  }
+  //}
   return retval;
 }
 
@@ -525,14 +534,18 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var movingPizzas1 = document.querySelector("#movingPizzas1");
-  updateDomWithElementRemoved(movingPizzas1, function() {
-    var scrollTop = document.body.scrollTop;
-    var items = movingPizzas1.children;
-    for (var i = 0, length = items.length; i <length; i++) {
-      var phase = Math.sin((scrollTop/ 1250) + (i % 5));
-      items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-    }
-  });
+  var viewTop = document.body.scrollTop;
+  var x = viewTop / 1250;
+
+  // Calculate index of last moving pizza
+  var lastPizza = Math.ceil(window.innerHeight / movingPizzas.spacing) * movingPizzas.cols;
+
+  var items = movingPizzas1.children;
+  for (var i = lastPizza - 1; i >= 0; --i) {
+    var item = items[i];
+    var phase = Math.sin(x + (i % 5));
+    item.style.left = item.basicLeft + 100 * phase + 'px';
+  }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -549,16 +562,14 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 8;
-  var s = 256;
+  var cols = movingPizzas.cols;
+  var s = movingPizzas.spacing;
   var movingPizzas1 = document.querySelector("#movingPizzas1");
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < 200; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
-    elem.style.height = "100px";
-    elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     fragment.appendChild(elem);

@@ -31,7 +31,8 @@ form {
 
 .mover {
   position: fixed;
-  width: 256px;
+  height: 100px;
+  width: 73.333px;
   z-index: -1;
 }
 
@@ -48,4 +49,9 @@ form {
 
  .container {
   background-color: rgba(240, 60, 60, 0.8);
+}
+
+/* This rule will be replaced at runtime when resizePizzas() is called. */
+.randomPizzaContainer {
+  width: 33%;
 }

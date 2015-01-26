@@ -26,7 +26,7 @@ gulp.task('move', function() {
 
 gulp.task('html', ['move'], function() {
   var minifyHtml = require('gulp-minify-html');
-  var opts = { comments: true }; // spare:true
+  var opts = { }; // comments: true, spare:true
 
   gulp.src(siteDir + '/*.html')
     .pipe(smoosher({base : siteDir}))
