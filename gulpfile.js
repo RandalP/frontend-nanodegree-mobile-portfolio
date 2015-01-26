@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp');
-var rename = require('gulp-rename');
 var sequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var smoosher = require('gulp-smoosher');
@@ -129,7 +128,7 @@ gulp.task('psi-seq', function (cb) {
 });
 
 gulp.task('psi-github', function(cb) {
-  site = 'http://randalp.github.io/frontend-nanodegree-mobile-portfolio/';
+  site = 'http://randalp.github.io/frontend-nanodegree-mobile-portfolio/site';
   return sequence(
     'psi-desktop',
     'psi-mobile',
@@ -145,18 +144,6 @@ gulp.task('psi-remote', ['psi-github'], function() {
   process.exit();
 });
 
-
-gulp.task('test', function() {
-  psi('html5rocks.com', function (err, data) {
-    console.log(data.score);
-    console.log(data.pageStats);
-  })
-
-  // output a formatted report to the terminal
-  psi.output('html5rocks.com', function (err) {
-      console.log('done');
-  })
-});
 
 gulp.task('clean', function() {
   var del = require('del');
