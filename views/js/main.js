@@ -16,11 +16,6 @@ Cameron Pittman, Udacity Course Developer
 cameron *at* udacity *dot* com
 */
 
-var movingPizzas = {
-  cols: 8,
-  spacing: 256
-};
-
 // As you may have realized, this website randomly generates pizzas.
 // Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
@@ -384,7 +379,6 @@ var pizzaElementGenerator = function(i) {
 
   pizzaName = document.createElement("h4");
   pizzaName.innerHTML = randomName();
-  // TODO??? pizzaName.textContent = randomName();
   pizzaDescriptionContainer.appendChild(pizzaName);
 
   ul = document.createElement("ul");
@@ -455,7 +449,6 @@ var resizePizzas = function(size) {
     var newwidth = (pizzaWidth + dx) + 'px';
 
     var myStyle = document.styleSheets[0];
-    console.dir(myStyle);
     var length = myStyle.cssRules.length;
 
     // Replace last rule from stye.css which controls container width.
@@ -503,49 +496,100 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 }
 
 /**
- * Run callback with the element removed from the DOM (and thus being
- * out-of-the-flow).  Upon returning, the element will be inserted at its
- * original position even if callback rises an exception.
- * @param {!Element} element The element to be temporarily removed.
- * @param {function(): T} callback The function to call.
- * @return {T} Value returned by the callback function.
- * @template T
+ * Stores values related to drawing the moving pizzas.
+ * @global movingPizzas
  */
-function updateDomWithElementRemoved(element, callback) {
-  var parentNode = element.parentNode;
-  var nextSibling = element.nextSibling;
-  parentNode.removeChild(element);
-  var retval = null;
-  //try {
-    retval = callback();
-  //}
-  //finally {
-    parentNode.insertBefore(element, nextSibling);
-  //}
-  return retval;
+var movingPizzas = {
+  cols: 8,
+  spacing: 256,
+  lastPizza: 0,
+  width: 73
+};
+
+/**
+ * Store for the last recorded scroll position.
+ * @global latestScrollY
+ */
+var latestScrollY = 0;
+
+/**
+ * Flag used to synchronize animation frames.
+ * @global ticking
+ */
+var ticking = false;
+
+/**
+ * Handles debouncing of scroll events.
+ * @function onScroll
+ * @listen scroll
+ */
+function onScroll() {
+  latestScrollY = window.scrollY;
+  if (!ticking) {
+    requestAnimationFrame(updatePositions);
+  }
+  ticking = true;
 }
 
-// The following code for sliding background pizzas was pulled from Ilya's demo found at:
-// https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
+var movingPizzas1 = document.querySelector("#movingPizzas1");
 
-// Moves the sliding background pizzas based on scroll position
+/**
+ * Handles resize events using animation frame.
+ * @function onResize
+ * @listens resize
+ */
+function onResize() {
+  if (!ticking) {
+    requestAnimationFrame(updateVisibility);
+  }
+  ticking = true;
+}
+
+/**
+ * Updates the visibility of moving pizzas which are below the window height, before
+ * calling updatePositions().
+ * @function updateVisibility
+ */
+function updateVisibility() {
+  // Calculate index of last moving pizza
+  movingPizzas.lastPizza = Math.ceil(window.innerHeight / movingPizzas.spacing) * movingPizzas.cols;
+
+  var items = movingPizzas.items;
+
+  // Hide all the pizzas which aren't visible.
+  for (i = items.length - 1; i >= movingPizzas.lastPizza; --i) {
+    items[i].classList.add('invisible');
+  }
+  updatePositions();
+}
+
+/**
+ * Moves the sliding background pizzas based on scroll position
+ * The following code for sliding background pizzas was pulled from Ilya's demo found at:
+ * https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
+ * @function updatePositions
+ */
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var movingPizzas1 = document.querySelector("#movingPizzas1");
-  var viewTop = document.body.scrollTop;
-  var x = viewTop / 1250;
+  var viewRight = window.innerWidth;
+  var newX = latestScrollY / 1250;
 
-  // Calculate index of last moving pizza
-  var lastPizza = Math.ceil(window.innerHeight / movingPizzas.spacing) * movingPizzas.cols;
+  for (var i = movingPizzas.lastPizza - 1; i >= 0; --i) {
+    var item = movingPizzas.items[i];
+    var newLeft = Math.floor(item.basicLeft + 100 * Math.sin(newX + (i % 5)));
 
-  var items = movingPizzas1.children;
-  for (var i = lastPizza - 1; i >= 0; --i) {
-    var item = items[i];
-    var phase = Math.sin(x + (i % 5));
-    item.style.left = item.basicLeft + 100 * phase + 'px';
+    // Only update position if pizza is onscreen
+    if (newLeft >= -movingPizzas.width && newLeft <= viewRight) {
+      item.style.left = newLeft + 'px';
+      item.classList.remove('invisible');
+    } else {
+      item.classList.add('invisible');
+    }
   }
+
+  ticking = false;
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -558,13 +602,13 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+window.addEventListener('scroll', onScroll);
+window.addEventListener('resize', onResize);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = movingPizzas.cols;
   var s = movingPizzas.spacing;
-  var movingPizzas1 = document.querySelector("#movingPizzas1");
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < 200; i++) {
     var elem = document.createElement('img');
@@ -575,5 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fragment.appendChild(elem);
   }
   movingPizzas1.appendChild(fragment);
-  updatePositions();
+  movingPizzas.items = movingPizzas1.children;
+  // Ensure we have the right number of pizzas visible.
+  updateVisibility();
 });
