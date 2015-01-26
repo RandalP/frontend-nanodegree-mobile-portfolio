@@ -15,7 +15,8 @@ Udacity Front-End Web Developer Nanodegress [Project 4 Rubric](https://www.udaci
 * <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
 ### Demo Site
-You can find my optimized version of the portfolio at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site).
+The minimally optimized version is at [Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio)
+The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default'.
 
 ### Extra Websites Consulted
 [Optimize CSS Delivery](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)
@@ -28,3 +29,5 @@ You can find my optimized version of the portfolio at [Optimized Portfolio](http
 [Inserting HTML elements with Javascript](http://stackoverflow.com/questions/814564/inserting-html-elements-with-javascript)
 [Faster Animations](http://www.html5rocks.com/en/tutorials/speed/animations)
 [Adding Rules to Stylesheets with Javascript](http://davidwalsh.name/add-rules-stylesheets)
+[Gulp.js](http://gulpjs.com/)
+[Building With Gulp](http://www.smashingmagazine.com/2014/06/11/building-with-gulp)
