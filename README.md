@@ -15,8 +15,29 @@ Udacity Front-End Web Developer Nanodegress [Project 4 Rubric](https://www.udaci
 * <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
 ### Demo Site
-The minimally optimized version is at [Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio)
-The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default'.
+The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default' in order to optimize images, inline CSS, Javascript, and minify code into the site directory.
+
+For reference, the minimally optimized version is at [Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio).
+
+
+### Pizza Optimisations
+#### Moving Pizzas
+* Created object to cache information about moving pizzas
+* Added use of animation frames to debounce the scrolling performance
+* Used CSS "invisible" class and used it to hide moving pizzas which were below screen and cached lastPizza value (updated by resize events)
+* Modified for-loop in updatePositions() to only iterate over pizzas which could be onscreen
+  * Added check if pizza was actually going to end up onscreen before setting style.left
+  * Toggled "invisible" CSS class on pizzas depending on whether they should be on-screen
+* Movable pizzas are added to a document fragment before being added to document in one step to improve loading performance.
+  * Pizza.png was resized to match fixed height * width which was also moved from generated HTML into CSS
+
+#### Resizing Pizzas
+* Converted generated pizzas to use SVG instead of PNG format
+* changePizzaSizes()
+  * Resizing is achieved by replacing a new CSS rule added to views/css/style.css instead of setting style.width directly on each element.
+  * Retrieves the children of randomPizzas once rather than calling querySelectorAll() on every line within a loop.
+  * The width of the div and a single pizza container are calculated once and passed to determineDx(), rather than being recalculated for each container
+* Resizable pizzas are added to a document fragment before being added to document in one step to improve loading performance.
 
 ### Extra Websites Consulted
 [Optimize CSS Delivery](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)
