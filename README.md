@@ -15,7 +15,7 @@ Udacity Front-End Web Developer Nanodegress [Project 4 Rubric](https://www.udaci
 * <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
 ### Demo Site
-The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default' in order to optimize images, inline CSS, Javascript, and minify code into the site directory.
+The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default' in order to optimize images, inline CSS, Javascript, and minify code into the __site__ directory.
 
 For reference, the minimally optimized version is at [Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio).
 
@@ -41,14 +41,25 @@ For reference, the minimally optimized version is at [Portfolio](https://ranadlp
 
 ### Extra Websites Consulted
 [Optimize CSS Delivery](https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery)
+
 [PNG & JPEG Optimization](https://tinypng.com)
+
 [JPEG resizing](http://www.picresize.com/results)
+
 [Converting PNG to SVG](http://quasimondo.com/ZorroSVG)
+
 [Optimizing font requests](https://developers.google.com/fonts/docs/getting_started#Optimizing_Requests)
+
 [Web Optimization Tips](http://www.hongkiat.com/blog/ultimate-guide-to-web-optimization-tips-best-practices)
+
 [Optimizing Javascript](https://developers.google.com/speed/articles/optimizing-javascript)
+
 [Inserting HTML elements with Javascript](http://stackoverflow.com/questions/814564/inserting-html-elements-with-javascript)
+
 [Faster Animations](http://www.html5rocks.com/en/tutorials/speed/animations)
+
 [Adding Rules to Stylesheets with Javascript](http://davidwalsh.name/add-rules-stylesheets)
+
 [Gulp.js](http://gulpjs.com/)
+
 [Building With Gulp](http://www.smashingmagazine.com/2014/06/11/building-with-gulp)
