@@ -15,9 +15,9 @@ Udacity Front-End Web Developer Nanodegress [Project 4 Rubric](https://www.udaci
 * <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
 ### Demo Site
-The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default' in order to optimize images, inline CSS, Javascript, and minify code into the __site__ directory.
+The fully optimized version of the portfolio built using Gulp is at [Optimized Portfolio](https://randalp.github.io/frontend-nanodegree-mobile-portfolio/site). This can be built from the source by executing 'gulp default' in order to optimize images, inline CSS, Javascript, and minify code into the __site__ directory.
 
-For reference, the minimally optimized version is at [Portfolio](https://ranadlp.github.io/frontend-nanodegree-mobile-portfolio).
+For reference, the minimally optimized version is at [Portfolio](https://randalp.github.io/frontend-nanodegree-mobile-portfolio).
 
 
 ### Pizza Optimisations
